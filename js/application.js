@@ -1,14 +1,18 @@
 
-var randomNumber, numberOfGuess, maxNumberOfGuess;
+var randomNumber, numberOfGuess, maxNumberOfGuess, guesses;
 
 var init = function (){
 	maxNumberOfGuess = 5;
 	numberOfGuess = 0;
 	randomNumber = Math.floor((Math.random() * 100) + 1);
+	guesses = [];
 
 	$('#txtNumber').val('');
+	$('#nbOfTry').text(maxNumberOfGuess);
+	
 	$('#btnGuess').prop('disabled', false);
 	$('#btnHint').prop('disabled', false);
+
 	$('#btnPlayAgain').removeClass('btn-primary');
 	$('#btnPlayAgain').addClass('btn-default');
 
@@ -17,6 +21,7 @@ var init = function (){
 var endGame = function(){
 	$('#btnGuess').prop('disabled', true);
 	$('#btnHint').prop('disabled', true);
+
 	$('#btnPlayAgain').removeClass('btn-default');
 	$('#btnPlayAgain').addClass('btn-primary');
 }
@@ -25,58 +30,68 @@ var endGame = function(){
 var guess = function (){
 
 	var inputTxt =  $('#txtNumber').val();
-
 	var validationStatus = validateInteger1to100(inputTxt);
 
 	if(validationStatus[0]){
 
 		var inputNumber = Number(inputTxt);
-		numberOfGuess++;
 
-		// If User guess right
-		if(inputNumber === randomNumber){
-			showStatusMessage('Congratulation you won!','green');
-			endGame();
-		}
-		else{
+		// Check if the guess is a repeat
+		if(guesses.indexOf(inputTxt) < 0){
+			guesses.push(inputTxt);
+			numberOfGuess++;	
 
-			// If no more guesses
-			if(numberOfGuess === maxNumberOfGuess){
-				showStatusMessage("Game Over! You're out of guesses...",'red');
+			// If User guess right
+			if(inputNumber === randomNumber){
+				showStatusMessage('Congratulation you won!','green');
 				endGame();
 			}
 			else{
 
-				var gap = randomNumber - inputNumber;
-				var absGap = Math.abs(gap);
-				var hintMsg = '';
-
-				if (gap < 0){
-					hintMsg = 'Guess lower.';
+				// If the user is out of guesses
+				if(numberOfGuess === maxNumberOfGuess){
+					showStatusMessage("Game Over! You're out of guesses.",'black');
+					endGame();
 				}
 				else{
-					hintMsg = 'Guess higher.';
-				}
 
-				if(absGap >= 80){
-					showStatusMessage('You are ice cold! ' + hintMsg, 'blue');	
-				}
-				else if(absGap >= 60 && absGap < 80 ){
-					showStatusMessage('You are cold! ' + hintMsg, 'blue');	
-				}
-				else if(absGap >= 40 && absGap < 60 ){
-					showStatusMessage('You are warm! ' + hintMsg, 'yellow');	
-				}
-				else if(absGap >= 20 && absGap < 40 ){
-					showStatusMessage('You are hot! ' + hintMsg, 'orange');	
-				}
-				else if(absGap >= 1 && absGap < 20 ){
-					showStatusMessage('You are super hot! ' + hintMsg, 'orange');
-				}
-				else{
-					showStatusMessage('inputNumber:'+ numberOfGuess + " random number:"+randomNumber+ " gap:"+gap, 'green');
+					var gap = randomNumber - inputNumber;
+					var absGap = Math.abs(gap);
+					var hintMsg = '';
+
+					// Define hint message (Guess lower or higher)
+					if (gap < 0){
+						hintMsg = 'Guess lower.';
+					}
+					else{
+						hintMsg = 'Guess higher.';
+					}
+
+					// Show ice cold, cold, warm, hot or super hot message depending on the guess
+					if(absGap >= 80){
+						showStatusMessage('You are ice cold! ' + hintMsg, 'blue');	
+					}
+					else if(absGap >= 60 && absGap < 80 ){
+						showStatusMessage('You are cold! ' + hintMsg, 'blue');	
+					}
+					else if(absGap >= 40 && absGap < 60 ){
+						showStatusMessage('You are warm! ' + hintMsg, 'yellow');	
+					}
+					else if(absGap >= 20 && absGap < 40 ){
+						showStatusMessage('You are hot! ' + hintMsg, 'orange');	
+					}
+					else if(absGap >= 1 && absGap < 20 ){
+						showStatusMessage('You are super hot! ' + hintMsg, 'red');
+					}
+					else{
+						console.log("Something's wrong with validation in this program.")
+					}
 				}
 			}
+		}
+		else
+		{
+			showStatusMessage("You already tried this number. We'll be nice and not count it.",'black');
 		}
 
 	}
@@ -104,11 +119,8 @@ var showStatusMessage = function(message, color) {
 // return: [boolean,string]
 var validateInteger1to100 = function(input){
 	
-	if(!input.match(/^\d+$/)){
-		return [false,'The value entered is not an integer. Try again.'];		
-	}
-	else if(input < 0 || input > 100){
-		return [false,'The number must be between 1 and 100. Try again.'];
+	if(!input.match(/^\d+$/) || input < 0 || input > 100){
+		return [false,'ERROR: The value entered is not an integer between 1 and 100. Try again.'];		
 	}
 	else{
 		return [true,''];
@@ -129,9 +141,8 @@ $(function(){
 		$('#statusDiv').hide('slow');
 	});
 
-	$('#btnPlayAgain').on('click', function(event){
-		event.preventDefault();
-		showStatusMessage('The game has been reinitialized. Play again!', 'green')
+	$('#btnPlayAgain').on('click', function(){
+		showStatusMessage('The game has been reset. Play again!', 'black')
 		init();
 	});
 
