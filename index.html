@@ -32,14 +32,17 @@
         <p class="lead">Try to guess the number by typing a number between 1 and 100. </p>
         <div style="width: 271px;margin-left:auto;margin-right:auto;">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="1 to 100">
+            <input id="txtNumber" type="text" class="form-control" placeholder="1 to 100">
             <span class="input-group-btn">
-              <button class="btn btn-success" type="button">Guess!</button>
+              <button id="btnGuess" class="btn btn-success" type="button">Guess!</button>
             </span>
           </div>
+          <div id="statusDiv" style="text-align:left">
+            <span ="statusSpan" style="color:red;"></span>
+          </div>
           <div style="margin-top:15px;">
-            <a href="#" class="btn btn-default" style="width:132px;">Play again</a>
-            <a href="#" class="btn btn-default" style="width:135px;">Give me a hint</a>
+            <a id="btnPlayAgain" href="#" class="btn btn-default" style="width:132px;">Play again</a>
+            <a id="btnHint" href="#" class="btn btn-default" style="width:135px;">Give me a hint</a>
             <h5 style="text-align:left">Click <b>Play Again</b> to reset the game or <b>Give me a hint</b> to get a hint.</h5>
           </div>
           
@@ -56,10 +59,9 @@
         <p>&copy; 2014 The Guessing Game - By Hugo Marcotte</p>
       </div>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    
+    <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-2.1.1.min"></script>
+    <script src="js/application.js"></script>
   </body>
 </html>
