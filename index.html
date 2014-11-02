@@ -19,9 +19,7 @@
   <body>
     <div class="container">
       <header class="page-header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">About</a></li>
-        </ul>
+       
         <div>
           <h3>The Guessing Game!</h1>
         </div>
@@ -31,17 +29,26 @@
         <h2>Welcome to the infamous Guessing Game!</h3>
         <p class="lead">Try to guess the number by typing a number between 1 and 100. Be careful you only have <span id="nbOfTry"></span> guesses.</p>
         <div style="width: 271px;margin-left:auto;margin-right:auto;">
-          <div class="input-group">
-            <input id="txtNumber" type="text" class="form-control" placeholder="1 to 100">
-            <span class="input-group-btn">
-              <button id="btnGuess" class="btn btn-success" type="button">Guess!</button>
-            </span>
+          <form id="frmGuess">
+            <div class="input-group">
+                <input id="txtNumber" type="text" class="form-control" placeholder="1 to 100">
+                <span class="input-group-btn">
+                  <button id="btnGuess" class="btn btn-success" type="button">Guess!</button>
+                </span>
+            </div>
+          </form>
+          <div id="imgThumb">
+            
+            <h3 style="font-weight:bold;font-color:blue;margin-bottom:15px;"><span id="spnAnswer"></span> - Congratulation you won!</h3>
+            <img  src="img/thumb.png">
           </div>
           <div id="statusDiv" style="text-align:left">
-            <span style="font-weight:bold"></span>
+            <span style="font-weight:bold"></span>                        
+          </div>
+          <div id="hintsDiv" style="text-align:left">
           </div>
           <div style="margin-top:15px;">
-            <button id="btnPlayAgain" class="btn btn-default" style="width:132px;">Play again</button>
+            <button id="btnPlayAgain" class="btn btn-default" style="width:132px;">Reset</button>
             <button id="btnHint"  class="btn btn-default" style="width:135px;">Give me a hint</button>
             <h5 style="text-align:left">Click <b>Play Again</b> to reset the game or <b>Give me a hint</b> to get a hint.</h5>
           </div>
