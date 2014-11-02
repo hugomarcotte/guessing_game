@@ -10,9 +10,9 @@ var init = function (){
 	guesses = [];
 
 	// Reset state of txtbox
-	var txtNumber = $('#txtNumber');
-	txtNumber.val('');
-	txtNumber.removeAttr("disabled", "disabled"); 
+	var $txtNumber = $('#txtNumber');
+	$txtNumber.val('');
+	$txtNumber.removeAttr("disabled", "disabled"); 
 
 	// Set current max nb of try
 	$('#nbOfTry').text(maxNumberOfGuess);
@@ -21,10 +21,10 @@ var init = function (){
 	$('#btnGuess').prop('disabled', false);
 	$('#btnHint').prop('disabled', false);
 
-	var btnPlayAgain = $('#btnPlayAgain');
-	btnPlayAgain.removeClass('btn-primary');	
-	btnPlayAgain.addClass('btn-default');
-	btnPlayAgain.text('Reset');
+	var $btnPlayAgain = $('#btnPlayAgain');
+	$btnPlayAgain.removeClass('btn-primary');	
+	$btnPlayAgain.addClass('btn-default');
+	$btnPlayAgain.text('Reset');
 
 	$('#frmGuess').show();
 	$('#imgThumb').hide();
@@ -47,25 +47,25 @@ var endGame = function(userWon){
 	$('#txtNumber').attr("disabled", "disabled"); 
 
 	// Highlight the play again button and change text
-	var btnPlayAgain = $('#btnPlayAgain')
-	btnPlayAgain.removeClass('btn-default');
-	btnPlayAgain.addClass('btn-primary');
-	btnPlayAgain.text('Play Again!');
+	var $btnPlayAgain = $('#btnPlayAgain')
+	$btnPlayAgain.removeClass('btn-default');
+	$btnPlayAgain.addClass('btn-primary');
+	$btnPlayAgain.text('Play Again!');
 }
 
 var guess = function (){
 
-	var inputTxt =  $('#txtNumber').val();
-	var validationStatus = validateInteger1to100(inputTxt);
+	var $inputTxt =  $('#txtNumber').val();
+	var validationStatus = validateInteger1to100($inputTxt);
 
 	// If input is valid
 	if(validationStatus[0]){
 
-		var inputNumber = Number(inputTxt);
+		var inputNumber = Number($inputTxt);
 
 		// Check if the guess is a repeat
-		if(guesses.indexOf(inputTxt) < 0){
-			guesses.push(inputTxt);
+		if(guesses.indexOf($inputTxt) < 0){
+			guesses.push($inputTxt);
 			numberOfGuess++;	
 
 			// If User guess right
@@ -151,13 +151,13 @@ var guess = function (){
 // message: string {the message to display}
 // color: string {color to show the message in}
 var showStatusMessage = function(message, color) {
-	var statusDiv = $('#statusDiv');
-	var statusSpan = statusDiv.find('span');
+	var $statusDiv = $('#statusDiv');
+	var $statusSpan = $statusDiv.find('span');
 
-	statusSpan.css('color', color);
-	statusSpan.text(message);
+	$statusSpan.css('color', color);
+	$statusSpan.text(message);
 
-	statusDiv.show();
+	$statusDiv.show();
 }
 
 // Function that takes a text input and return an array cotaining
